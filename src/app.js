@@ -4,6 +4,8 @@ const helmet = require('helmet');
 const cors = require('cors');
 
 require('dotenv').config();
+const rootHTML = require('./root');
+
 
 const middlewares = require('./middlewares');
 const api = require('./api');
@@ -16,12 +18,11 @@ app.use(cors());
 app.use(express.json());
 
 app.get('/', (req, res) => {
-  res.json({
-    message: '🦄🌈✨👋🌎🌍🌏✨🌈🦄',
-  });
+    res.set('Content-Type', 'text/html');
+    res.end(rootHTML);
 });
 
-app.use('/api/v1', api);
+app.use('/sdapi/v1', api);
 
 app.use(middlewares.notFound);
 app.use(middlewares.errorHandler);
